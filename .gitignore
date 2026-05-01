@@ -1,0 +1,31 @@
+node_modules
+.next
+.open-next
+.wrangler
+
+# secrets
+.env
+.env.local
+.env.*.local
+.dev.vars
+
+# os
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# editor
+.vscode
+.idea
+
+# project assets (private)
+手相参考.jpg
+面相参考.jpg
+痣相参考.jpg
+手部正面图.jpg
+.spike-*
