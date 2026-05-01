@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { type DivineType, KIND_META } from "@/lib/prompts";
 
 interface Props {
@@ -10,11 +11,27 @@ interface Props {
 
 export function ResultView({ type, image, onReset }: Props) {
   const meta = KIND_META[type];
+  const [renderError, setRenderError] = useState(false);
+
   return (
     <div className="flex flex-col gap-6">
       <div className="relative overflow-hidden rounded-2xl border border-cinnabar/40 bg-amber-50/5 shadow-[0_0_60px_-10px_rgba(220,38,38,0.35)]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={image} alt={`${meta.title}结果`} className="block w-full" />
+        {renderError ? (
+          <div className="flex flex-col items-center gap-3 p-8 text-center">
+            <p className="font-serif text-lg text-rose-300">⚠ 图片渲染失败</p>
+            <p className="text-xs text-gray-400">
+              结果已生成，但当前浏览器未能渲染。点击下方按钮直接下载查看。
+            </p>
+          </div>
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={image}
+            alt={`${meta.title}结果`}
+            className="block w-full"
+            onError={() => setRenderError(true)}
+          />
+        )}
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <a

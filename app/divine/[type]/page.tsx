@@ -42,6 +42,14 @@ function DivineInner({ type }: { type: "palm" | "face" | "mole" }) {
     return () => URL.revokeObjectURL(url);
   }, [file]);
 
+  // 结果是 blob URL,组件卸载或重置时 revoke 释放内存
+  useEffect(() => {
+    if (!result) return;
+    return () => {
+      if (result.startsWith("blob:")) URL.revokeObjectURL(result);
+    };
+  }, [result]);
+
   const sizeText = useMemo(() => {
     if (!file) return "";
     return `${(file.size / 1024 / 1024).toFixed(2)} MB`;

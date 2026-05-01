@@ -74,8 +74,7 @@ export function UploadZone({ onFile, preview, disabled }: Props) {
       <input
         ref={inputRef}
         type="file"
-        accept="image/*"
-        capture="environment"
+        accept="image/jpeg,image/png,image/webp,image/*"
         className="hidden"
         onChange={(e) => handleFiles(e.target.files)}
         disabled={disabled}
