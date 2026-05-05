@@ -5,7 +5,7 @@ import { PROMPTS, KIND_TO_SIZE, isDivineType } from "@/lib/prompts";
 export const dynamic = "force-dynamic";
 
 const MAX_BYTES = 6 * 1024 * 1024;
-const HEARTBEAT_MS = 3_000;
+const HEARTBEAT_MS = 1_000;
 
 interface UpstreamResponse {
   data?: { b64_json?: string }[];
