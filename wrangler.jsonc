@@ -12,6 +12,6 @@
     "enabled": true
   },
   "vars": {
-    "NEWCLI_BASE_URL": "https://code.newcli.com/codex/v1"
+    "NEWCLI_BASE_URL": "https://www.aiartmirror.com/v1"
   }
 }

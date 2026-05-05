@@ -47,13 +47,13 @@ export async function POST(req: NextRequest) {
     env = {
       NEWCLI_API_KEY: process.env.NEWCLI_API_KEY ?? "",
       NEWCLI_BASE_URL:
-        process.env.NEWCLI_BASE_URL ?? "https://code.newcli.com/codex/v1",
+        process.env.NEWCLI_BASE_URL ?? "https://www.aiartmirror.com/v1",
     } as CloudflareEnv;
   }
 
   const apiKey = env.NEWCLI_API_KEY?.trim();
   const baseUrl =
-    env.NEWCLI_BASE_URL?.trim() || "https://code.newcli.com/codex/v1";
+    env.NEWCLI_BASE_URL?.trim() || "https://www.aiartmirror.com/v1";
 
   if (!apiKey) {
     return jsonError(
