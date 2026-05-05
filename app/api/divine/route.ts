@@ -5,7 +5,7 @@ import { PROMPTS, KIND_TO_SIZE, isDivineType } from "@/lib/prompts";
 export const dynamic = "force-dynamic";
 
 const MAX_BYTES = 6 * 1024 * 1024;
-const HEARTBEAT_MS = 10_000;
+const HEARTBEAT_MS = 3_000;
 
 interface UpstreamResponse {
   data?: { b64_json?: string }[];
@@ -118,15 +118,20 @@ export async function POST(req: NextRequest) {
         }
       };
 
-      // 立即发首帧 SSE 注释，触发 first-byte 让客户端 / 边缘开始接收
+      // 立即发首帧 SSE 注释 + 一个 ping event,触发 first-byte
+      // 让客户端 / 边缘开始接收,并对中间代理友好
       safeEnqueue(": connected\n\n");
+      safeEnqueue(`event: ping\ndata: ${JSON.stringify({ t: Date.now() })}\n\n`);
 
-      // 心跳协程：每 10s 一个注释保活
+      // 心跳协程:每 3s 一个完整 event(部分代理会吞掉 SSE 注释行,
+      // 但 event 行一定会转发)。3s 的间隔比常见 NAT idle 5-15s 短
       const heartbeat = (async () => {
         while (!closed) {
           await sleep(HEARTBEAT_MS);
           if (closed) break;
-          safeEnqueue(`: keep-alive ${Date.now()}\n\n`);
+          safeEnqueue(
+            `event: ping\ndata: ${JSON.stringify({ t: Date.now() })}\n\n`,
+          );
         }
       })();
 
