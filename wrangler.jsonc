@@ -12,6 +12,8 @@
     "enabled": true
   },
   "vars": {
-    "NEWCLI_BASE_URL": "https://www.aiartmirror.com/v1"
+    "NEWCLI_BASE_URL": "https://www.aiartmirror.com/v1",
+    "LLM_BASE_URL": "https://api.aicodemirror.com/api/codex/backend-api/codex",
+    "LLM_MODEL": "gpt-5.4"
   }
 }

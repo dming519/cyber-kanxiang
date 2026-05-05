@@ -3,11 +3,40 @@
 import Link from "next/link";
 import { KIND_META, type DivineType } from "@/lib/prompts";
 
-export function HomeCard({ type }: { type: DivineType }) {
-  const meta = KIND_META[type];
+export interface HomeCardMeta {
+  href: string;
+  title: string;
+  subtitle: string;
+  tagline: string;
+  trigram: string;
+  accent: string;
+  cta?: string;
+}
+
+interface PropsByType {
+  type: DivineType;
+}
+interface PropsByMeta {
+  meta: HomeCardMeta;
+}
+type Props = PropsByType | PropsByMeta;
+
+function isByType(p: Props): p is PropsByType {
+  return "type" in p;
+}
+
+export function HomeCard(props: Props) {
+  const meta: HomeCardMeta = isByType(props)
+    ? {
+        href: `/divine/${props.type}`,
+        ...KIND_META[props.type],
+        cta: "开始推演",
+      }
+    : props.meta;
+
   return (
     <Link
-      href={`/divine/${type}`}
+      href={meta.href}
       className="group relative block overflow-hidden rounded-2xl border border-purple-500/30 bg-purple-500/[.06] p-8 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-cyan-400/60 hover:bg-purple-500/[.10] hover:shadow-[0_0_50px_-10px_rgba(34,211,238,0.55)]"
     >
       <span
@@ -29,7 +58,7 @@ export function HomeCard({ type }: { type: DivineType }) {
         </p>
 
         <div className="mt-8 flex items-center gap-2 text-sm text-neon-purple transition-all duration-300 group-hover:gap-4 group-hover:text-neon-cyan">
-          <span>开始推演</span>
+          <span>{meta.cta ?? "开始推演"}</span>
           <span aria-hidden>→</span>
         </div>
       </div>

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "browser-image-compression": "^2.0.2",
+    "lunar-typescript": "^1.8.6",
     "next": "^15.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

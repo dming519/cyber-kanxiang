@@ -11,6 +11,9 @@ importers:
       browser-image-compression:
         specifier: ^2.0.2
         version: 2.0.2
+      lunar-typescript:
+        specifier: ^1.8.6
+        version: 1.8.6
       next:
         specifier: ^15.3.0
         version: 15.5.15(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -1742,6 +1745,9 @@ packages:
   lru-cache@11.3.5:
     resolution: {integrity: sha512-NxVFwLAnrd9i7KUBxC4DrUhmgjzOs+1Qm50D3oF1/oL+r1NpZ4gA7xvG0/zJ8evR7zIKn4vLf7qTNduWFtCrRw==}
     engines: {node: 20 || >=22}
+
+  lunar-typescript@1.8.6:
+    resolution: {integrity: sha512-5Eo4T/cnuXfrgO4k5LCpOGHIUOuz5hCF/IfNv0T29WY2shR36Hiz+ecN9WjnUuxUKhql9gbOkPaQoqLFKtPRNA==}
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -4434,6 +4440,8 @@ snapshots:
   lru-cache@10.4.3: {}
 
   lru-cache@11.3.5: {}
+
+  lunar-typescript@1.8.6: {}
 
   math-intrinsics@1.1.0: {}
 
