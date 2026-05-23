@@ -50,10 +50,12 @@ git push -u origin main
 
 | 变量名 | 类型 | 值 |
 |---|---|---|
-| `NEWCLI_API_KEY` | **Secret** | `sk-ant-oat01-BCnp4D98I3KTlz_HREnMNf5-_oxSYyYE7zoPi7dV_2olXEilFxnBkNob9EIPx9fLM-CEFOE6wuXhFvg6XJe9Jh6LWpO67AA` |
+| `NEWCLI_API_KEY` | **Secret** | 在 Cloudflare 中配置 |
+| `LLM_API_KEY` | **Secret** | 在 Cloudflare 中配置 |
 | `NEWCLI_BASE_URL` | Plain text | 已在 `wrangler.jsonc` 中 |
+| `LLM_BASE_URL` | Plain text | 已在 `wrangler.jsonc` 中 |
 
-`NEWCLI_BASE_URL` 已经写在 `wrangler.jsonc` 的 `vars` 里，会随每次部署同步，不需要在仪表板重复配置。但 **API Key 一定要走 Secret 类型**——Cloudflare 会加密存储且不再回显，部署日志和环境列表都看不到原值。
+`NEWCLI_BASE_URL` 和 `LLM_BASE_URL` 已经写在 `wrangler.jsonc` 的 `vars` 里，会随每次部署同步，不需要在仪表板重复配置。但 **API Key 一定要走 Secret 类型**——Cloudflare 会加密存储且不再回显，部署日志和环境列表都看不到原值。
 
 加好 secret 后，仪表板顶部会出现 **Redeploy** 提示，点一下，让 Worker 拿到新的环境变量。
 

@@ -13,7 +13,6 @@
   },
   "vars": {
     "NEWCLI_BASE_URL": "https://ai.centos.hk/v1",
-    "LLM_BASE_URL": "https://ai.centos.hk/v1",
-    "LLM_MODEL": "gpt-5.4"
+    "LLM_BASE_URL": "https://ai.centos.hk/v1"
   }
 }

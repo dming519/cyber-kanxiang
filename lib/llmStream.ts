@@ -94,7 +94,10 @@ export function streamLLM<TChart>(opts: StreamLLMOptions<TChart>): Response {
       };
 
       try {
-        const url = `${opts.upstream.baseUrl.replace(/\/+$/, "")}/v1/chat/completions`;
+        const baseUrl = opts.upstream.baseUrl.replace(/\/+$/, "");
+        const url = baseUrl.endsWith("/v1")
+          ? `${baseUrl}/chat/completions`
+          : `${baseUrl}/v1/chat/completions`;
         const body = JSON.stringify({
           model: opts.upstream.model,
           stream: true,

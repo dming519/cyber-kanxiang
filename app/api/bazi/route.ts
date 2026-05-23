@@ -5,6 +5,7 @@ import { buildBaziPrompt } from "@/lib/baziPrompt";
 import { streamLLM } from "@/lib/llmStream";
 
 export const dynamic = "force-dynamic";
+const CHAT_MODEL = "gpt-5.4";
 
 function jsonError(status: number, message: string) {
   return Response.json({ ok: false, error: message }, { status });
@@ -23,19 +24,14 @@ async function resolveEnv(): Promise<ResolvedEnv | { error: string }> {
   } catch {
     env = {
       LLM_API_KEY: process.env.LLM_API_KEY ?? "",
-      LLM_BASE_URL:
-        process.env.LLM_BASE_URL ??
-        "https://api.aicodemirror.com/api/codex/backend-api/codex",
-      LLM_MODEL: process.env.LLM_MODEL ?? "gpt-5.4",
+      LLM_BASE_URL: process.env.LLM_BASE_URL ?? "",
     } as CloudflareEnv;
   }
   const apiKey = env.LLM_API_KEY?.trim();
   const baseUrl = env.LLM_BASE_URL?.trim();
-  const model = env.LLM_MODEL?.trim();
   if (!apiKey) return { error: "服务器尚未配置 LLM_API_KEY" };
   if (!baseUrl) return { error: "服务器尚未配置 LLM_BASE_URL" };
-  if (!model) return { error: "服务器尚未配置 LLM_MODEL" };
-  return { apiKey, baseUrl, model };
+  return { apiKey, baseUrl, model: CHAT_MODEL };
 }
 
 export async function POST(req: NextRequest) {
