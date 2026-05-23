@@ -28,8 +28,6 @@ export interface StreamLLMOptions<TChart> {
   prompts: BuildPromptResult;
   /** 控制采样,默认 0.8 */
   temperature?: number;
-  /** 最大输出 tokens */
-  maxTokens?: number;
 }
 
 export function sseHeaders(): HeadersInit {
@@ -102,7 +100,6 @@ export function streamLLM<TChart>(opts: StreamLLMOptions<TChart>): Response {
           model: opts.upstream.model,
           stream: true,
           temperature: opts.temperature ?? 0.8,
-          max_tokens: opts.maxTokens ?? 3500,
           messages: [
             { role: "system", content: opts.prompts.system },
             { role: "user", content: opts.prompts.user },

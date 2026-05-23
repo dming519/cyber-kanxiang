@@ -79,6 +79,5 @@ export async function POST(req: NextRequest) {
     upstream: envResult,
     prompts,
     temperature: 0.92,
-    maxTokens: 3500,
   });
 }
