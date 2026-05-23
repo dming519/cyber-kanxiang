@@ -12,8 +12,8 @@
     "enabled": true
   },
   "vars": {
-    "NEWCLI_BASE_URL": "https://www.aiartmirror.com/v1",
-    "LLM_BASE_URL": "https://api.aicodemirror.com/api/codex/backend-api/codex",
+    "NEWCLI_BASE_URL": "https://ai.centos.hk/v1",
+    "LLM_BASE_URL": "https://ai.centos.hk/v1",
     "LLM_MODEL": "gpt-5.4"
   }
 }
