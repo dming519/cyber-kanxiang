@@ -17,6 +17,16 @@ export type DivineResult = DivineSuccess | DivineFail;
 
 interface ResultPayload {
   ok: boolean;
+  taskId?: string;
+  status?: string;
+  b64?: string;
+  size?: number;
+  error?: string;
+}
+
+interface StatusPayload {
+  ok: boolean;
+  status?: "pending" | "running" | "succeeded" | "failed";
   b64?: string;
   size?: number;
   error?: string;
@@ -51,19 +61,84 @@ export async function callDivine(
     };
   }
 
-  if (!payload.b64) {
-    return { ok: false, error: "服务端响应缺少图片数据" };
+  let b64 = payload.b64;
+  let size = payload.size;
+  if (!b64) {
+    if (!payload.taskId) {
+      return { ok: false, error: "服务端响应缺少任务编号" };
+    }
+
+    const polled = await pollDivineTask(payload.taskId);
+    if (!polled.ok) {
+      return polled;
+    }
+    b64 = polled.b64;
+    size = polled.size;
   }
 
   // base64 → Blob URL，绕开 Android Chrome 对 data URL 的渲染上限
   let blobUrl: string;
   try {
-    blobUrl = await base64ToBlobUrl(payload.b64);
+    blobUrl = await base64ToBlobUrl(b64);
   } catch (e) {
     return { ok: false, error: `图片解码失败：${(e as Error).message}` };
   }
 
-  return { ok: true, image: blobUrl, size: payload.size ?? payload.b64.length };
+  return { ok: true, image: blobUrl, size: size ?? b64.length };
+}
+
+async function pollDivineTask(
+  taskId: string,
+): Promise<{ ok: true; b64: string; size?: number } | DivineFail> {
+  const deadline = Date.now() + 8 * 60 * 1000;
+
+  while (Date.now() < deadline) {
+    await sleep(2000);
+
+    let res: Response;
+    try {
+      res = await fetch(
+        `/api/divine/status?taskId=${encodeURIComponent(taskId)}`,
+        { method: "GET" },
+      );
+    } catch (e) {
+      return { ok: false, error: `查询任务失败：${(e as Error).message}` };
+    }
+
+    let payload: StatusPayload;
+    try {
+      payload = (await res.json()) as StatusPayload;
+    } catch {
+      return { ok: false, error: `任务状态返回非 JSON（HTTP ${res.status}）` };
+    }
+
+    if (!res.ok || !payload.ok) {
+      if (res.status === 404) {
+        continue;
+      }
+      return {
+        ok: false,
+        error: payload.error ?? `查询任务失败（HTTP ${res.status}）`,
+      };
+    }
+
+    if (payload.status === "succeeded") {
+      if (!payload.b64) {
+        return { ok: false, error: "任务成功但未返回图片数据" };
+      }
+      return { ok: true, b64: payload.b64, size: payload.size };
+    }
+
+    if (payload.status === "failed") {
+      return { ok: false, error: payload.error ?? "图片生成任务失败" };
+    }
+  }
+
+  return { ok: false, error: "任务超时，请稍后重试" };
+}
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function base64ToBlobUrl(b64: string): Promise<string> {

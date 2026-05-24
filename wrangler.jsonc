@@ -11,6 +11,12 @@
   "observability": {
     "enabled": true
   },
+  "services": [
+    {
+      "binding": "IMAGE_WORKER",
+      "service": "cyber-kanxiang-image-worker-kv"
+    }
+  ],
   "vars": {
     "NEWCLI_BASE_URL": "https://ai.centos.hk/v1",
     "LLM_BASE_URL": "https://ai.centos.hk/v1"

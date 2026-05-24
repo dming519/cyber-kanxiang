@@ -5,4 +5,8 @@ interface CloudflareEnv {
   NEWCLI_BASE_URL: string;
   LLM_API_KEY: string;
   LLM_BASE_URL: string;
+  IMAGE_WORKER_TOKEN?: string;
+  IMAGE_WORKER?: {
+    fetch(input: string | Request, init?: RequestInit): Promise<Response>;
+  };
 }

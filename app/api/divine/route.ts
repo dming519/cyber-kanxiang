@@ -1,36 +1,42 @@
 import { NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { PROMPTS, KIND_TO_SIZE, isDivineType } from "@/lib/prompts";
+import {
+  fileToDataUrl,
+  runLocalDivineTask,
+  writeTask,
+  type MinimalKvNamespace,
+} from "@/lib/divineTask";
+import { isDivineType } from "@/lib/prompts";
 
 export const dynamic = "force-dynamic";
 
 const MAX_BYTES = 6 * 1024 * 1024;
 
-interface UpstreamResponse {
-  data?: { b64_json?: string }[];
-  error?: { message?: string };
+interface DivineEnv extends CloudflareEnv {
+  TASKS_KV?: MinimalKvNamespace;
+  IMAGE_WORKER?: {
+    fetch(input: string | Request, init?: RequestInit): Promise<Response>;
+  };
+  IMAGE_WORKER_URL?: string;
+  IMAGE_WORKER_TOKEN?: string;
 }
 
 function jsonError(status: number, message: string) {
   return Response.json({ ok: false, error: message }, { status });
 }
 
-function guessExt(mime: string): string {
-  if (!mime) return ".jpg";
-  if (mime.includes("png")) return ".png";
-  if (mime.includes("webp")) return ".webp";
-  if (mime.includes("gif")) return ".gif";
-  return ".jpg";
-}
-
-async function getEnv(): Promise<CloudflareEnv> {
+async function getEnv(): Promise<DivineEnv> {
   try {
-    return (await getCloudflareContext({ async: true })).env;
+    return (await getCloudflareContext({ async: true })).env as DivineEnv;
   } catch {
     return {
       NEWCLI_API_KEY: process.env.NEWCLI_API_KEY ?? "",
       NEWCLI_BASE_URL: process.env.NEWCLI_BASE_URL ?? "",
-    } as CloudflareEnv;
+      LLM_API_KEY: process.env.LLM_API_KEY ?? "",
+      LLM_BASE_URL: process.env.LLM_BASE_URL ?? "",
+      IMAGE_WORKER_URL: process.env.IMAGE_WORKER_URL ?? "",
+      IMAGE_WORKER_TOKEN: process.env.IMAGE_WORKER_TOKEN ?? "",
+    } as DivineEnv;
   }
 }
 
@@ -78,58 +84,74 @@ export async function POST(req: NextRequest) {
     return jsonError(400, "type 必须为 palm / face / mole 之一");
   }
 
-  const fileBuffer = await fileField.arrayBuffer();
-  const upstream = new FormData();
-  upstream.append("model", "gpt-image-2");
-  upstream.append(
-    "image",
-    new Blob([fileBuffer], { type: fileField.type || "image/jpeg" }),
-    `input${guessExt(fileField.type)}`,
-  );
-  upstream.append("prompt", PROMPTS[typeField]);
-  upstream.append("size", KIND_TO_SIZE[typeField]);
+  const taskId = crypto.randomUUID();
+  const now = Date.now();
+  await writeTask(env.TASKS_KV, taskId, {
+    status: "pending",
+    createdAt: now,
+    updatedAt: now,
+  });
 
-  let res: Response;
-  try {
-    res = await fetch(`${baseUrl.replace(/\/+$/, "")}/images/edits`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}` },
-      body: upstream,
+  const imageDataUrl = await fileToDataUrl(fileField);
+  const workerUrl = env.IMAGE_WORKER_URL?.trim();
+  const workerToken = env.IMAGE_WORKER_TOKEN?.trim();
+
+  if ((env.IMAGE_WORKER || workerUrl) && !workerToken) {
+    await writeTask(env.TASKS_KV, taskId, {
+      status: "failed",
+      createdAt: now,
+      updatedAt: Date.now(),
+      error: "服务器尚未配置 IMAGE_WORKER_TOKEN",
     });
-  } catch (e) {
-    const err = e as Error & { cause?: unknown };
-    const detail =
-      err.cause instanceof Error ? err.cause.message : String(err.cause ?? "");
-    console.error("[divine] upstream fetch failed", err);
-    return jsonError(
-      502,
-      `上游连接失败：${err.message}${detail ? ` (${detail})` : ""}`,
-    );
+    return Response.json({ ok: true, taskId, status: "pending" }, { status: 202 });
   }
 
-  const text = await res.text();
-  if (!res.ok) {
-    let msg = text.slice(0, 500);
+  if ((env.IMAGE_WORKER || workerUrl) && workerToken) {
     try {
-      const json = JSON.parse(text) as UpstreamResponse;
-      if (json.error?.message) msg = json.error.message;
-    } catch {
-      /* keep raw */
+      const taskBody = JSON.stringify({ taskId, type: typeField, imageDataUrl });
+      const dispatch = env.IMAGE_WORKER
+        ? await env.IMAGE_WORKER.fetch("https://image-worker/task", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${workerToken}`,
+            },
+            body: taskBody,
+          })
+        : await fetch(`${workerUrl!.replace(/\/+$/, "")}/task`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${workerToken}`,
+            },
+            body: taskBody,
+          });
+      if (!dispatch.ok) {
+        const text = await dispatch.text();
+        await writeTask(env.TASKS_KV, taskId, {
+          status: "failed",
+          createdAt: now,
+          updatedAt: Date.now(),
+          error: `任务派发失败（HTTP ${dispatch.status}）：${text.slice(0, 300)}`,
+        });
+      }
+    } catch (e) {
+      await writeTask(env.TASKS_KV, taskId, {
+        status: "failed",
+        createdAt: now,
+        updatedAt: Date.now(),
+        error: `任务派发失败：${(e as Error).message}`,
+      });
     }
-    return jsonError(502, `上游 ${res.status}：${msg}`);
+  } else {
+    runLocalDivineTask(env.TASKS_KV, {
+      taskId,
+      type: typeField,
+      imageDataUrl,
+      apiKey,
+      baseUrl,
+    });
   }
 
-  let json: UpstreamResponse;
-  try {
-    json = JSON.parse(text) as UpstreamResponse;
-  } catch {
-    return jsonError(502, "上游返回非 JSON");
-  }
-
-  const b64 = json.data?.[0]?.b64_json;
-  if (!b64) {
-    return jsonError(502, "上游响应未包含图片数据");
-  }
-
-  return Response.json({ ok: true, b64, size: b64.length });
+  return Response.json({ ok: true, taskId, status: "pending" }, { status: 202 });
 }
