@@ -1,5 +1,6 @@
 import { DurableObject } from "cloudflare:workers";
 import {
+  divineTaskKey,
   readTask,
   runDivineTask,
   writeTask,
@@ -19,6 +20,7 @@ interface DurableObjectNamespace {
 
 interface Env {
   IMAGE_TASKS: DurableObjectNamespace;
+  TASKS_KV: MinimalKvNamespace;
   IMAGE_WORKER_TOKEN?: string;
   NEWCLI_API_KEY?: string;
   NEWCLI_BASE_URL?: string;
@@ -44,33 +46,17 @@ function authorize(request: Request, env: Env) {
   return Boolean(token && auth === `Bearer ${token}`);
 }
 
-function storageAdapter(storage: {
-  get(key: string): Promise<unknown>;
-  put(key: string, value: unknown): Promise<void>;
-}): MinimalKvNamespace {
-  return {
-    async get(key: string) {
-      const value = await storage.get(key);
-      return typeof value === "string" ? value : null;
-    },
-    async put(key: string, value: string) {
-      await storage.put(key, value);
-    },
-  };
-}
-
 const TASK_REQUEST_KEY = "task-request";
 
 export class ImageTasksDO extends DurableObject<Env> {
   async fetch(request: Request) {
     const url = new URL(request.url);
-    const store = storageAdapter(this.ctx.storage);
 
     if (request.method === "GET" && url.pathname === "/status") {
       const taskId = url.searchParams.get("taskId")?.trim();
       if (!taskId) return jsonError(400, "缺少 taskId");
 
-      const task = await readTask(store, taskId);
+      const task = await readTask(this.env.TASKS_KV, taskId);
       if (!task) return jsonError(404, "任务不存在或已过期");
 
       return json({ ok: true, ...task });
@@ -96,25 +82,33 @@ export class ImageTasksDO extends DurableObject<Env> {
       return jsonError(400, "缺少合法 imageDataUrl");
     }
 
-    await this.ctx.storage.put(TASK_REQUEST_KEY, body);
+    await this.env.TASKS_KV.put(taskRequestKey(taskId), JSON.stringify(body), {
+      expirationTtl: 60 * 60,
+    });
+    await this.ctx.storage.put(TASK_REQUEST_KEY, taskId);
     await this.ctx.storage.setAlarm(Date.now() + 100);
 
     return json({ ok: true, taskId, status: "pending" }, { status: 202 });
   }
 
   async alarm() {
-    const body = (await this.ctx.storage.get(TASK_REQUEST_KEY)) as
-      | DivineTaskRequest
+    const taskId = (await this.ctx.storage.get(TASK_REQUEST_KEY)) as
+      | string
       | undefined;
+    if (!taskId) return;
+
+    const requestText = await this.env.TASKS_KV.get(taskRequestKey(taskId));
+    const body = requestText
+      ? (JSON.parse(requestText) as DivineTaskRequest)
+      : undefined;
     if (!body?.taskId || !isDivineType(body.type)) return;
 
-    const store = storageAdapter(this.ctx.storage);
     const now = Date.now();
     const apiKey = this.env.NEWCLI_API_KEY?.trim();
     const baseUrl = this.env.NEWCLI_BASE_URL?.trim();
 
     if (!apiKey || !baseUrl) {
-      await writeTask(store, body.taskId, {
+      await writeTask(this.env.TASKS_KV, body.taskId, {
         status: "failed",
         createdAt: now,
         updatedAt: Date.now(),
@@ -123,13 +117,14 @@ export class ImageTasksDO extends DurableObject<Env> {
       return;
     }
 
-    await runDivineTask(store, {
+    await runDivineTask(this.env.TASKS_KV, {
       taskId: body.taskId,
       type: body.type,
       imageDataUrl: body.imageDataUrl,
       apiKey,
       baseUrl,
     });
+    await this.env.TASKS_KV.delete?.(taskRequestKey(body.taskId));
     await this.ctx.storage.delete(TASK_REQUEST_KEY);
   }
 }
@@ -174,3 +169,7 @@ export default {
     return jsonError(404, "Not Found");
   },
 };
+
+function taskRequestKey(taskId: string) {
+  return `${divineTaskKey(taskId)}:request`;
+}

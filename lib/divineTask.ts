@@ -24,6 +24,7 @@ export interface MinimalKvNamespace {
     value: string,
     options?: { expirationTtl?: number },
   ): Promise<void>;
+  delete?(key: string): Promise<void>;
 }
 
 interface RunDivineTaskOptions extends DivineTaskRequest {

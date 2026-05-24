@@ -14,6 +14,12 @@
       }
     ]
   },
+  "kv_namespaces": [
+    {
+      "binding": "TASKS_KV",
+      "id": "48f2e2e08a784fc68c3de22ed874d9ba"
+    }
+  ],
   "migrations": [
     {
       "tag": "v1",
