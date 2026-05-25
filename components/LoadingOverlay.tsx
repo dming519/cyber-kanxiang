@@ -28,19 +28,19 @@ export function LoadingOverlay({ open }: { open: boolean }) {
   const seconds = Math.floor(elapsed / 1000);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#201913]/90 backdrop-blur-md">
       <div className="flex flex-col items-center gap-8 px-6 text-center">
         <Taiji />
         <div>
-          <p className="font-serif text-2xl text-neon-cyan">{stage.text}</p>
-          <p className="mt-2 font-mono text-xs uppercase tracking-[0.4em] text-purple-300/60">
+          <p className="font-serif text-2xl text-[#f7f4ee]">{stage.text}</p>
+          <p className="mt-2 font-mono text-xs uppercase tracking-[0.4em] text-brand-primary/60">
             elapsed {seconds}s · gpt-image-2
           </p>
         </div>
-        <div className="h-1 w-72 overflow-hidden rounded-full bg-purple-900/40">
-          <div className="h-full w-1/3 animate-scan-line bg-gradient-to-r from-transparent via-cyan-300 to-transparent" />
+        <div className="h-1 w-72 overflow-hidden rounded-full bg-[#edeade]/10">
+          <div className="h-full w-1/3 animate-scan-line bg-gradient-to-r from-transparent via-brand-primary to-transparent" />
         </div>
-        <p className="max-w-md text-xs leading-relaxed text-gray-500">
+        <p className="max-w-md text-xs leading-relaxed text-[#a3988f]">
           通常需要 30-90 秒。请保持页面打开，断线则需重新提交。
         </p>
       </div>
@@ -52,20 +52,20 @@ function Taiji() {
   return (
     <svg
       viewBox="0 0 100 100"
-      className="size-32 animate-spin-taiji drop-shadow-[0_0_20px_rgba(168,85,247,0.6)]"
+      className="size-32 animate-spin-taiji drop-shadow-[0_0_20px_rgba(204,144,92,0.25)]"
     >
       <defs>
         <clipPath id="left">
           <path d="M50,0 A50,50 0 0,0 50,100 A25,25 0 0,1 50,50 A25,25 0 0,0 50,0 Z" />
         </clipPath>
       </defs>
-      <circle cx="50" cy="50" r="48" fill="#0a0a14" stroke="#a855f7" strokeWidth="1.5" />
+      <circle cx="50" cy="50" r="48" fill="#201913" stroke="#cc905c" strokeWidth="1.5" />
       <path
         d="M50,2 A48,48 0 0,1 50,98 A24,24 0 0,1 50,50 A24,24 0 0,0 50,2 Z"
-        fill="#22d3ee"
+        fill="#cc905c"
       />
-      <circle cx="50" cy="26" r="6" fill="#0a0a14" />
-      <circle cx="50" cy="74" r="6" fill="#22d3ee" />
+      <circle cx="50" cy="26" r="6" fill="#201913" />
+      <circle cx="50" cy="74" r="6" fill="#cc905c" />
     </svg>
   );
 }

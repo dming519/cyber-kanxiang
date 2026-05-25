@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { BgRunes } from "@/components/BgRunes";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "赛博看相 · Cyber Kanxiang",
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a14",
+  themeColor: "#201913",
   width: "device-width",
   initialScale: 1,
 };
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="relative min-h-screen overflow-x-hidden antialiased">
         <BgRunes />
+        <SiteHeader />
         {children}
       </body>
     </html>

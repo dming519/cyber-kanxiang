@@ -31,16 +31,16 @@ export function StreamingText({ text, busy }: Props) {
   return (
     <div
       ref={containerRef}
-      className="relative max-h-[70vh] overflow-y-auto rounded-2xl border border-purple-500/30 bg-gradient-to-b from-black/40 to-purple-950/20 p-6 leading-relaxed backdrop-blur-sm"
+      className="relative max-h-[70vh] overflow-y-auto rounded-xl border border-[#edeade]/10 bg-[#2e261f]/80 p-6 leading-relaxed backdrop-blur-sm"
     >
       {blocks.length === 0 && busy && (
-        <p className="text-sm italic text-purple-300/70">凝神运笔…</p>
+        <p className="text-sm italic text-brand-primary/70">凝神运笔…</p>
       )}
       {blocks.map((b, i) => (
         <BlockView key={i} block={b} />
       ))}
       {busy && (
-        <span className="ml-1 inline-block h-4 w-2 animate-pulse rounded-sm bg-neon-cyan align-middle" />
+        <span className="ml-1 inline-block h-4 w-2 animate-pulse rounded-sm bg-brand-primary align-middle" />
       )}
     </div>
   );
@@ -114,14 +114,14 @@ function BlockView({ block }: { block: Block }) {
   }
   if (block.kind === "h3") {
     return (
-      <h3 className="mt-5 mb-2 font-serif text-base tracking-wide text-neon-cyan">
+      <h3 className="mt-5 mb-2 font-serif text-base tracking-wide text-[#f7f4ee]">
         {block.text}
       </h3>
     );
   }
   if (block.kind === "ul") {
     return (
-      <ul className="mb-4 ml-5 list-disc space-y-1 text-sm text-gray-200 marker:text-fuchsia-400">
+      <ul className="mb-4 ml-5 list-disc space-y-1 text-sm text-[#edeade] marker:text-brand-primary">
         {block.items.map((it, i) => (
           <li key={i}>{renderInline(it)}</li>
         ))}
@@ -129,7 +129,7 @@ function BlockView({ block }: { block: Block }) {
     );
   }
   return (
-    <p className="mb-3 text-sm text-gray-200">{renderInline(block.text)}</p>
+    <p className="mb-3 text-sm text-[#edeade]">{renderInline(block.text)}</p>
   );
 }
 

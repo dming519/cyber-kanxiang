@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { UploadZone } from "@/components/UploadZone";
 import { DivineButton } from "@/components/DivineButton";
@@ -83,40 +82,45 @@ function DivineInner({ type }: { type: "palm" | "face" | "mole" }) {
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-5 py-10 sm:py-14">
-      <nav className="mb-6">
-        <Link
-          href="/"
-          className="text-sm text-purple-300/80 transition hover:text-neon-cyan"
-        >
-          ← 回到入口
-        </Link>
-      </nav>
-
-      <header className="mb-8">
-        <p className="font-mono text-xs uppercase tracking-[0.4em] text-neon-cyan/80">
+    <main className="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-14">
+      <header className="mx-auto mb-8 max-w-3xl text-center">
+        <div className="mx-auto mb-4 grid size-16 place-items-center rounded-2xl border border-brand-primary/35 bg-brand-light font-serif text-3xl text-brand-primary">
+          {meta.trigram}
+        </div>
+        <p className="font-mono text-xs uppercase tracking-[0.4em] text-brand-primary/80">
           {meta.subtitle}
         </p>
-        <h1 className="mt-2 flex items-baseline gap-3 font-serif text-4xl font-black text-glow-purple sm:text-5xl">
+        <h1 className="mt-3 font-serif text-4xl font-black text-brand-primary sm:text-5xl">
           {meta.title}
-          <span className="text-2xl text-cinnabar/70 sm:text-3xl">
-            {meta.trigram}
-          </span>
         </h1>
-        <p className="mt-3 text-sm leading-relaxed text-gray-400">
+        <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#edeade] sm:text-base">
           {meta.tagline}
         </p>
       </header>
 
       {!result && (
-        <section className="space-y-6">
+        <section className="mx-auto max-w-4xl rounded-2xl border border-[#edeade]/10 bg-[#2e261f]/75 p-4 shadow-[0_24px_80px_-56px_rgba(0,0,0,1)] backdrop-blur-sm sm:p-6">
+          <div className="mb-5 flex flex-col justify-between gap-3 border-b border-[#edeade]/10 pb-5 sm:flex-row sm:items-end">
+            <div>
+              <h2 className="font-serif text-2xl font-bold text-[#f7f4ee]">
+                上传参考图片
+              </h2>
+              <p className="mt-1 text-sm text-[#a3988f]">
+                图片会自动压缩，生成完成后直接展示结果图。
+              </p>
+            </div>
+            <span className="rounded-full bg-[#edeade]/5 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.24em] text-brand-primary">
+              gpt-image-2
+            </span>
+          </div>
+          <div className="space-y-6">
           <UploadZone
             onFile={handlePick}
             preview={previewUrl}
             disabled={loading}
           />
           {file && (
-            <p className="text-right font-mono text-xs text-gray-500">
+            <p className="text-right font-mono text-xs text-[#a3988f]/70">
               {file.name} · {sizeText}
             </p>
           )}
@@ -128,19 +132,24 @@ function DivineInner({ type }: { type: "palm" | "face" | "mole" }) {
             朱笔落点 · 开始推演
           </DivineButton>
           {error && (
-            <p className="rounded-lg border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
+            <p className="rounded-lg border border-[#ef4444]/40 bg-[#ef4444]/10 px-4 py-3 text-sm text-[#fca5a5]">
               ⚠ {error}
             </p>
           )}
-          <p className="text-center text-xs leading-relaxed text-gray-500">
+          <p className="text-center text-xs leading-relaxed text-[#a3988f]/70">
             服务端调用 gpt-image-2，单次推演通常需 30-90 秒。
             <br />
             上传图片仅用于本次生成，不留存于服务器。
           </p>
+          </div>
         </section>
       )}
 
-      {result && <ResultView type={type} image={result} onReset={reset} />}
+      {result && (
+        <section className="mx-auto max-w-4xl rounded-2xl border border-[#edeade]/10 bg-[#2e261f]/75 p-4 shadow-[0_24px_80px_-56px_rgba(0,0,0,1)] backdrop-blur-sm sm:p-6">
+          <ResultView type={type} image={result} onReset={reset} />
+        </section>
+      )}
 
       <LoadingOverlay open={loading} />
     </main>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BaziForm, type BaziFormValue } from "@/components/BaziForm";
 import { BaziChartView } from "@/components/BaziChart";
@@ -56,37 +55,57 @@ export default function BaziPage() {
   };
 
   return (
-    <main className="mx-auto max-w-4xl px-5 py-10 sm:py-14">
-      <nav className="mb-6">
-        <Link
-          href="/"
-          className="text-sm text-purple-300/80 transition hover:text-neon-cyan"
-        >
-          ← 回到入口
-        </Link>
-      </nav>
-
-      <header className="mb-8">
-        <p className="font-mono text-xs uppercase tracking-[0.4em] text-amber-300/80">
+    <main className="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-14">
+      <header className="mx-auto mb-8 max-w-3xl text-center">
+        <div className="mx-auto mb-4 grid size-16 place-items-center rounded-2xl border border-brand-primary/35 bg-brand-light font-serif text-3xl text-brand-primary">
+          ☷
+        </div>
+        <p className="font-mono text-xs uppercase tracking-[0.4em] text-brand-primary/80">
           Bazi · 四柱八字
         </p>
-        <h1 className="mt-2 flex items-baseline gap-3 font-serif text-4xl font-black text-glow-purple sm:text-5xl">
+        <h1 className="mt-3 font-serif text-4xl font-black text-brand-primary sm:text-5xl">
           看八字
-          <span className="text-2xl text-amber-300/80 sm:text-3xl">☷</span>
         </h1>
-        <p className="mt-3 text-sm leading-relaxed text-gray-400">
+        <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#edeade] sm:text-base">
           公历 / 农历皆可输入，本地精确排盘 + AI 命理流式解读。
         </p>
       </header>
 
       {!chart && (
-        <section className="rounded-2xl border border-purple-500/30 bg-black/30 p-6 backdrop-blur-sm">
+        <section className="mx-auto max-w-4xl rounded-2xl border border-[#edeade]/10 bg-[#2e261f]/75 p-4 shadow-[0_24px_80px_-56px_rgba(0,0,0,1)] backdrop-blur-sm sm:p-6">
+          <div className="mb-5 flex flex-col justify-between gap-3 border-b border-[#edeade]/10 pb-5 sm:flex-row sm:items-end">
+            <div>
+              <h2 className="font-serif text-2xl font-bold text-[#f7f4ee]">
+                输入出生信息
+              </h2>
+              <p className="mt-1 text-sm text-[#a3988f]">
+                前端本地排盘，提交后流式生成命理解读。
+              </p>
+            </div>
+            <span className="rounded-full bg-[#edeade]/5 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.24em] text-brand-primary">
+              Local Chart
+            </span>
+          </div>
           <BaziForm busy={busy} onSubmit={handleSubmit} />
         </section>
       )}
 
       {chart && (
-        <div className="space-y-6">
+        <section className="mx-auto max-w-5xl rounded-2xl border border-[#edeade]/10 bg-[#2e261f]/75 p-4 shadow-[0_24px_80px_-56px_rgba(0,0,0,1)] backdrop-blur-sm sm:p-6">
+          <div className="mb-5 flex flex-col justify-between gap-3 border-b border-[#edeade]/10 pb-5 sm:flex-row sm:items-end">
+            <div>
+              <h2 className="font-serif text-2xl font-bold text-[#f7f4ee]">
+                排盘与解读
+              </h2>
+              <p className="mt-1 text-sm text-[#a3988f]">
+                四柱、五行统计与 AI 解读会在下方同步更新。
+              </p>
+            </div>
+            <span className="rounded-full bg-[#edeade]/5 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.24em] text-brand-primary">
+              Streaming
+            </span>
+          </div>
+          <div className="space-y-6">
           <BaziChartView chart={chart} />
           <ElementBars chart={chart} />
           <StreamingText text={text} busy={busy} />
@@ -96,7 +115,7 @@ export default function BaziPage() {
               <button
                 type="button"
                 onClick={goNaming}
-                className="rounded-xl border border-emerald-400/50 bg-emerald-400/10 px-6 py-3 font-serif tracking-widest text-emerald-300 transition hover:bg-emerald-400/20"
+                className="rounded-full border border-[#059669]/50 bg-[#059669]/10 px-6 py-3 font-serif tracking-widest text-[#7dd3a7] transition hover:bg-[#059669]/20"
               >
                 根据此八字起名 →
               </button>
@@ -107,7 +126,7 @@ export default function BaziPage() {
                   setText("");
                   setError(null);
                 }}
-                className="rounded-xl border border-purple-500/50 bg-purple-500/10 px-6 py-3 font-serif tracking-widest text-neon-purple transition hover:bg-purple-500/20"
+                className="rounded-full border border-brand-primary/50 bg-brand-light px-6 py-3 font-serif tracking-widest text-brand-primary transition hover:border-brand-primary hover:bg-brand-primary/20"
               >
                 重新排盘
               </button>
@@ -115,11 +134,12 @@ export default function BaziPage() {
           )}
 
           {error && (
-            <p className="rounded-lg border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
+            <p className="rounded-lg border border-[#ef4444]/40 bg-[#ef4444]/10 px-4 py-3 text-sm text-[#fca5a5]">
               ⚠ {error}
             </p>
           )}
-        </div>
+          </div>
+        </section>
       )}
     </main>
   );

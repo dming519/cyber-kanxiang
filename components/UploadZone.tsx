@@ -40,10 +40,10 @@ export function UploadZone({ onFile, preview, disabled }: Props) {
       }}
       className={`relative flex aspect-[4/3] w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed transition-all duration-300 ${
         disabled
-          ? "cursor-not-allowed border-gray-700 bg-gray-800/20"
+          ? "cursor-not-allowed border-[#edeade]/10 bg-[#3d3229]/30"
           : hover
-            ? "border-neon-cyan bg-cyan-400/10 shadow-[0_0_40px_-5px_rgba(34,211,238,0.6)]"
-            : "border-purple-500/40 bg-purple-500/[.04] hover:border-neon-purple hover:bg-purple-500/[.10]"
+            ? "border-brand-primary bg-brand-light shadow-[0_0_40px_-12px_rgba(204,144,92,0.55)]"
+            : "border-[#edeade]/15 bg-[#2e261f]/60 hover:border-brand-primary/60 hover:bg-[#3d3229]/60"
       }`}
     >
       {preview ? (
@@ -54,18 +54,18 @@ export function UploadZone({ onFile, preview, disabled }: Props) {
             alt="预览"
             className="absolute inset-0 size-full object-contain"
           />
-          <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-cyan-300/15 to-transparent animate-scan-line" />
-          <span className="absolute bottom-3 right-3 rounded bg-black/55 px-2 py-1 text-xs text-cyan-200 backdrop-blur-sm">
+          <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#edeade]/15 to-transparent animate-scan-line" />
+          <span className="absolute bottom-3 right-3 rounded bg-[#201913]/75 px-2 py-1 text-xs text-[#edeade] backdrop-blur-sm">
             点击或拖拽更换
           </span>
         </>
       ) : (
         <div className="text-center">
-          <div className="mb-3 select-none text-5xl text-purple-300/70">⬆</div>
-          <p className="font-serif text-lg text-gray-200">
+          <div className="mb-3 select-none text-5xl text-brand-primary/75">⬆</div>
+          <p className="font-serif text-lg text-[#edeade]">
             点击 / 拖拽上传图片
           </p>
-          <p className="mt-1 text-xs text-gray-500">
+          <p className="mt-1 text-xs text-[#a3988f]">
             支持 JPG / PNG · 自动压缩至 ≤2MB
           </p>
         </div>

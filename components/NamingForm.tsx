@@ -70,7 +70,7 @@ export function NamingForm({ initial, busy, onSubmit }: Props) {
             onChange={(e) => setSurname(e.target.value)}
             maxLength={4}
             placeholder="李 / 欧阳"
-            className="w-full rounded-lg border border-purple-500/40 bg-black/30 px-3 py-2 font-serif text-base text-neon-cyan outline-none transition focus:border-neon-cyan"
+            className="w-full rounded-lg border border-[#edeade]/10 bg-[#3d3229] px-3 py-2 font-serif text-base text-brand-primary outline-none transition hover:border-brand-primary/35 focus:border-brand-primary"
           />
         </FieldLabel>
         <FieldLabel text="性别">
@@ -86,12 +86,12 @@ export function NamingForm({ initial, busy, onSubmit }: Props) {
         </FieldLabel>
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-gray-300">
+      <label className="flex items-center gap-2 text-sm text-[#c9c0b6]">
         <input
           type="checkbox"
           checked={hasBirth}
           onChange={(e) => setHasBirth(e.target.checked)}
-          className="size-4 accent-cyan-400"
+          className="size-4 accent-brand-primary"
         />
         提供出生日期（建议；用于按八字喜用神补益取名）
       </label>
@@ -122,7 +122,7 @@ export function NamingForm({ initial, busy, onSubmit }: Props) {
                 value={birthDate}
                 onChange={(e) => setBirthDate(e.target.value)}
                 placeholder="YYYY-MM-DD"
-                className="w-full rounded-lg border border-purple-500/40 bg-black/30 px-3 py-2 font-mono text-sm text-gray-100 outline-none transition focus:border-neon-cyan"
+                className="w-full rounded-lg border border-[#edeade]/10 bg-[#3d3229] px-3 py-2 font-mono text-sm text-[#edeade] outline-none transition hover:border-brand-primary/35 focus:border-brand-primary"
               />
             </FieldLabel>
             <FieldLabel text="出生时刻">
@@ -130,17 +130,17 @@ export function NamingForm({ initial, busy, onSubmit }: Props) {
                 type="time"
                 value={birthTime}
                 onChange={(e) => setBirthTime(e.target.value)}
-                className="w-full rounded-lg border border-purple-500/40 bg-black/30 px-3 py-2 font-mono text-sm text-gray-100 outline-none transition focus:border-neon-cyan"
+                className="w-full rounded-lg border border-[#edeade]/10 bg-[#3d3229] px-3 py-2 font-mono text-sm text-[#edeade] outline-none transition hover:border-brand-primary/35 focus:border-brand-primary"
               />
             </FieldLabel>
           </div>
           {calendar === "lunar" && (
-            <label className="flex items-center gap-2 text-sm text-gray-300">
+            <label className="flex items-center gap-2 text-sm text-[#c9c0b6]">
               <input
                 type="checkbox"
                 checked={leapMonth}
                 onChange={(e) => setLeapMonth(e.target.checked)}
-                className="size-4 accent-fuchsia-500"
+                className="size-4 accent-brand-primary"
               />
               本月为闰月
             </label>
@@ -155,12 +155,12 @@ export function NamingForm({ initial, busy, onSubmit }: Props) {
           maxLength={200}
           rows={2}
           placeholder="例：不要生僻字 / 倾向有典故 / 避免与家族长辈重字"
-          className="w-full rounded-lg border border-purple-500/40 bg-black/30 px-3 py-2 text-sm text-gray-100 outline-none transition focus:border-neon-cyan"
+          className="w-full rounded-lg border border-[#edeade]/10 bg-[#3d3229] px-3 py-2 text-sm text-[#edeade] outline-none transition hover:border-brand-primary/35 focus:border-brand-primary"
         />
       </FieldLabel>
 
       {error && (
-        <p className="rounded-md border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-sm text-rose-300">
+        <p className="rounded-md border border-[#ef4444]/40 bg-[#ef4444]/10 px-3 py-2 text-sm text-[#fca5a5]">
           ⚠ {error}
         </p>
       )}
@@ -168,10 +168,10 @@ export function NamingForm({ initial, busy, onSubmit }: Props) {
       <button
         type="submit"
         disabled={busy}
-        className={`mt-1 rounded-xl px-8 py-3 font-serif text-lg tracking-[0.3em] transition ${
+        className={`mt-1 rounded-full px-8 py-3 font-serif text-lg tracking-[0.3em] transition ${
           busy
-            ? "cursor-not-allowed bg-gray-700/40 text-gray-500"
-            : "animate-neon-pulse bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-500 text-white hover:scale-[1.01] active:scale-95"
+            ? "cursor-not-allowed bg-[#3d3229]/60 text-[#a3988f]/60"
+            : "animate-neon-pulse bg-brand-primary text-white hover:bg-brand-hover hover:scale-[1.01] active:scale-95"
         }`}
       >
         {busy ? "起名中…" : "落笔取名 · 八字补益"}
@@ -182,7 +182,7 @@ export function NamingForm({ initial, busy, onSubmit }: Props) {
 
 function FieldLabel({ text, children }: { text: string; children: React.ReactNode }) {
   return (
-    <label className="flex flex-col gap-2 text-xs uppercase tracking-[0.3em] text-purple-300/80">
+    <label className="flex flex-col gap-2 text-xs uppercase tracking-[0.3em] text-brand-primary/80">
       <span>{text}</span>
       {children}
     </label>
@@ -213,8 +213,8 @@ function SegmentedControl({
             onClick={() => onChange(opt.value)}
             className={`flex-1 rounded-lg border px-3 py-2 text-sm font-serif transition ${
               on
-                ? "border-neon-cyan bg-cyan-400/15 text-neon-cyan shadow-[0_0_18px_-4px_rgba(34,211,238,0.55)]"
-                : "border-purple-500/30 bg-black/20 text-gray-400 hover:border-purple-400/60 hover:text-gray-200"
+                ? "border-brand-primary bg-brand-light text-brand-primary shadow-[0_0_18px_-6px_rgba(204,144,92,0.5)]"
+                : "border-[#edeade]/10 bg-[#201913]/35 text-[#a3988f] hover:border-brand-primary/45 hover:text-[#edeade]"
             }`}
           >
             {opt.label}

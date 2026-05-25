@@ -100,21 +100,21 @@ export const KIND_META: Record<
     subtitle: "Palmistry · 掌纹解析",
     tagline: "纹中有命，掌握乾坤。十二要点逐线推演。",
     trigram: "☰",
-    accent: "from-purple-500 to-pink-500",
+    accent: "from-brand-primary to-[#d97706]",
   },
   face: {
     title: "看面相",
     subtitle: "Physiognomy · 五官十二宫",
     tagline: "天庭饱满，地阁方圆。十宫流年，气色见机。",
     trigram: "☲",
-    accent: "from-cyan-400 to-purple-500",
+    accent: "from-brand-primary to-[#edeade]",
   },
   mole: {
     title: "看痣相",
     subtitle: "Mole Reading · 望色辨痣",
     tagline: "一痣一星宿，无一遗漏。麻衣柳庄逐颗解。",
     trigram: "☵",
-    accent: "from-rose-400 to-cyan-400",
+    accent: "from-brand-primary to-[#ae6f37]",
   },
 };
 

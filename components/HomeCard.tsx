@@ -37,33 +37,33 @@ export function HomeCard(props: Props) {
   return (
     <Link
       href={meta.href}
-      className="group relative block overflow-hidden rounded-2xl border border-purple-500/30 bg-purple-500/[.06] p-8 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-cyan-400/60 hover:bg-purple-500/[.10] hover:shadow-[0_0_50px_-10px_rgba(34,211,238,0.55)]"
+      className="group relative block overflow-hidden rounded-xl border border-[#edeade]/10 bg-[#2e261f]/80 p-8 shadow-[0_18px_60px_-42px_rgba(0,0,0,0.9)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-primary/45 hover:bg-[#3d3229]/70 hover:shadow-[0_0_42px_-18px_rgba(204,144,92,0.5)]"
     >
       <span
-        className={`absolute -right-12 -top-12 size-40 rounded-full bg-gradient-to-br ${meta.accent} opacity-20 blur-3xl transition-opacity duration-500 group-hover:opacity-50`}
+        className={`absolute -right-12 -top-12 size-40 rounded-full bg-gradient-to-br ${meta.accent} opacity-[0.12] blur-3xl transition-opacity duration-500 group-hover:opacity-25`}
       />
-      <span className="absolute right-6 top-5 select-none text-5xl text-cinnabar/70 animate-rune-float">
+      <span className="absolute right-6 top-5 select-none text-5xl text-brand-primary/45 animate-rune-float">
         {meta.trigram}
       </span>
 
       <div className="relative">
-        <h3 className="font-serif text-3xl font-black tracking-wide text-neon-cyan">
+        <h3 className="font-serif text-3xl font-black tracking-wide text-[#f7f4ee]">
           {meta.title}
         </h3>
-        <p className="mt-1 text-xs uppercase tracking-[0.3em] text-purple-300/70">
+        <p className="mt-1 text-xs uppercase tracking-[0.3em] text-brand-primary/70">
           {meta.subtitle}
         </p>
-        <p className="mt-6 min-h-[3.2em] text-sm leading-relaxed text-gray-300">
+        <p className="mt-6 min-h-[3.2em] text-sm leading-relaxed text-[#c9c0b6]">
           {meta.tagline}
         </p>
 
-        <div className="mt-8 flex items-center gap-2 text-sm text-neon-purple transition-all duration-300 group-hover:gap-4 group-hover:text-neon-cyan">
+        <div className="mt-8 flex items-center gap-2 text-sm text-brand-primary transition-all duration-300 group-hover:gap-4 group-hover:text-[#f7f4ee]">
           <span>{meta.cta ?? "开始推演"}</span>
           <span aria-hidden>→</span>
         </div>
       </div>
 
-      <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-cyan-400/10 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+      <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#edeade]/10 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
     </Link>
   );
 }

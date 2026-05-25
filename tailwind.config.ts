@@ -1,21 +1,36 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {
       colors: {
         ink: {
-          bg: "#0a0a14",
-          mid: "#150a24",
-          deep: "#0a0a1f",
+          bg: "#201913",
+          mid: "#2e261f",
+          deep: "#16100c",
         },
         neon: {
-          purple: "#a855f7",
-          cyan: "#22d3ee",
-          rose: "#f472b6",
+          purple: "#cc905c",
+          cyan: "#edeade",
+          rose: "#d97706",
         },
-        cinnabar: "#dc2626",
+        brand: {
+          primary: "#cc905c",
+          hover: "#c27b3d",
+          light: "rgba(204, 144, 92, 0.12)",
+          dark: "#ae6f37",
+        },
+        surface: {
+          panel: "#2e261f",
+          field: "#3d3229",
+          elevated: "rgba(237, 234, 222, 0.05)",
+        },
+        cinnabar: "#cc905c",
       },
       fontFamily: {
         serif: ['"Noto Serif SC"', "ui-serif", "serif"],
@@ -31,11 +46,11 @@ const config: Config = {
         neonPulse: {
           "0%,100%": {
             boxShadow:
-              "0 0 18px #a855f7, 0 0 36px rgba(168,85,247,0.55), inset 0 0 18px rgba(168,85,247,0.18)",
+              "0 0 18px rgba(204,144,92,0.28), 0 0 36px rgba(204,144,92,0.16), inset 0 0 18px rgba(204,144,92,0.08)",
           },
           "50%": {
             boxShadow:
-              "0 0 26px #22d3ee, 0 0 52px rgba(34,211,238,0.55), inset 0 0 24px rgba(34,211,238,0.22)",
+              "0 0 22px rgba(237,234,222,0.18), 0 0 46px rgba(204,144,92,0.2), inset 0 0 24px rgba(237,234,222,0.06)",
           },
         },
         spinTaiji: {

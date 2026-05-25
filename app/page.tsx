@@ -8,7 +8,7 @@ const EXTRA_FEATURES: HomeCardMeta[] = [
     subtitle: "Bazi · 四柱排盘",
     tagline: "公历农历皆可入，本地排盘 + AI 命理流式解读。",
     trigram: "☷",
-    accent: "from-amber-400 to-fuchsia-500",
+    accent: "from-brand-primary to-[#d97706]",
     cta: "开始排盘",
   },
   {
@@ -17,41 +17,61 @@ const EXTRA_FEATURES: HomeCardMeta[] = [
     subtitle: "Naming · 八字补益",
     tagline: "按喜用神补益，结合字义、音律、典故与避忌。",
     trigram: "☴",
-    accent: "from-emerald-400 to-cyan-400",
+    accent: "from-brand-primary to-[#059669]",
     cta: "落笔取名",
   },
 ];
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-16 sm:py-24">
-      <header className="mb-16 text-center">
-        <p className="mb-4 font-mono text-xs uppercase tracking-[0.6em] text-neon-cyan/80">
-          CYBER × DIVINATION
-        </p>
-        <h1 className="font-serif text-5xl font-black leading-tight text-glow-purple sm:text-7xl">
-          赛博<span className="mx-2 text-neon-cyan text-glow-cyan">看</span>相
+    <main className="mx-auto max-w-7xl px-5 py-12 sm:px-6 sm:py-16">
+      <header className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto mb-6 grid size-20 place-items-center rounded-2xl border border-brand-primary/35 bg-brand-light font-serif text-4xl text-brand-primary shadow-[0_0_32px_rgba(204,144,92,0.16)]">
+          相
+        </div>
+        <h1 className="font-serif text-5xl font-black leading-tight text-brand-primary sm:text-6xl">
+          赛博看相
         </h1>
-        <p className="mt-6 max-w-2xl text-sm leading-relaxed text-gray-400 sm:text-base">
-          于霓虹与卦象之间，由 AI 接续千年掌纹与命书的笔法。
-          上传一张图，或输入一组生辰，朱笔自落点。
+        <p className="mt-5 text-lg leading-relaxed text-[#edeade]">
+          上传图片或输入生辰，由 AI 生成传统相术与命理解析。
         </p>
-        <div className="mt-6 flex justify-center gap-3 font-serif text-2xl text-cinnabar/40">
-          <span>☰</span><span>☱</span><span>☲</span><span>☳</span>
-          <span>☴</span><span>☵</span><span>☶</span><span>☷</span>
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          {["图片推演", "本地排盘", "流式解读", "文化娱乐参考"].map((item) => (
+            <span
+              key={item}
+              className="rounded-full bg-[#edeade]/5 px-3 py-1.5 text-sm font-medium text-[#f7f4ee]"
+            >
+              {item}
+            </span>
+          ))}
         </div>
       </header>
 
-      <section className="grid w-full gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {ALL_TYPES.map((t) => (
-          <HomeCard key={t} type={t} />
-        ))}
-        {EXTRA_FEATURES.map((m) => (
-          <HomeCard key={m.href} meta={m} />
-        ))}
+      <section className="mx-auto mt-12 max-w-6xl rounded-2xl border border-[#edeade]/10 bg-[#2e261f]/70 p-4 shadow-[0_24px_80px_-56px_rgba(0,0,0,1)] backdrop-blur-sm sm:p-6">
+        <div className="mb-5 flex flex-col justify-between gap-3 border-b border-[#edeade]/10 pb-5 sm:flex-row sm:items-end">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.35em] text-brand-primary/75">
+              AI Divination Tools
+            </p>
+            <h2 className="mt-2 font-serif text-2xl font-bold text-[#f7f4ee]">
+              选择一个工具开始
+            </h2>
+          </div>
+          <p className="max-w-md text-sm leading-relaxed text-[#a3988f]">
+            图像类生成结果图；八字与起名使用流式文本输出。
+          </p>
+        </div>
+        <div className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {ALL_TYPES.map((t) => (
+            <HomeCard key={t} type={t} />
+          ))}
+          {EXTRA_FEATURES.map((m) => (
+            <HomeCard key={m.href} meta={m} />
+          ))}
+        </div>
       </section>
 
-      <footer className="mt-24 text-center text-xs text-gray-600">
+      <footer className="mt-16 text-center text-xs text-[#a3988f]/60">
         <p>本站仅供文化娱乐参考，所有结果由 AI 生成，请勿据此作出重大人生决策。</p>
         <p className="mt-2 font-mono tracking-widest opacity-70">
           powered by gpt-image-2 · gpt-5.4 · cloudflare workers

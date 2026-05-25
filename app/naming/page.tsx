@@ -1,7 +1,6 @@
 "use client";
 
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { NamingForm, type NamingFormValue } from "@/components/NamingForm";
 import { BaziChartView } from "@/components/BaziChart";
@@ -69,37 +68,57 @@ function NamingInner() {
   }, []);
 
   return (
-    <main className="mx-auto max-w-4xl px-5 py-10 sm:py-14">
-      <nav className="mb-6">
-        <Link
-          href="/"
-          className="text-sm text-purple-300/80 transition hover:text-neon-cyan"
-        >
-          ← 回到入口
-        </Link>
-      </nav>
-
-      <header className="mb-8">
-        <p className="font-mono text-xs uppercase tracking-[0.4em] text-emerald-300/80">
+    <main className="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-14">
+      <header className="mx-auto mb-8 max-w-3xl text-center">
+        <div className="mx-auto mb-4 grid size-16 place-items-center rounded-2xl border border-brand-primary/35 bg-brand-light font-serif text-3xl text-brand-primary">
+          ☴
+        </div>
+        <p className="font-mono text-xs uppercase tracking-[0.4em] text-brand-primary/80">
           Naming · 起名补益
         </p>
-        <h1 className="mt-2 flex items-baseline gap-3 font-serif text-4xl font-black text-glow-cyan sm:text-5xl">
+        <h1 className="mt-3 font-serif text-4xl font-black text-brand-primary sm:text-5xl">
           起名
-          <span className="text-2xl text-emerald-300/80 sm:text-3xl">☴</span>
         </h1>
-        <p className="mt-3 text-sm leading-relaxed text-gray-400">
+        <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#edeade] sm:text-base">
           按八字喜用神补益取名，结合字义、音律、典故与避忌。
         </p>
       </header>
 
       {!submitted && (
-        <section className="rounded-2xl border border-emerald-400/30 bg-black/30 p-6 backdrop-blur-sm">
+        <section className="mx-auto max-w-4xl rounded-2xl border border-[#edeade]/10 bg-[#2e261f]/75 p-4 shadow-[0_24px_80px_-56px_rgba(0,0,0,1)] backdrop-blur-sm sm:p-6">
+          <div className="mb-5 flex flex-col justify-between gap-3 border-b border-[#edeade]/10 pb-5 sm:flex-row sm:items-end">
+            <div>
+              <h2 className="font-serif text-2xl font-bold text-[#f7f4ee]">
+                输入取名条件
+              </h2>
+              <p className="mt-1 text-sm text-[#a3988f]">
+                可从八字页带入出生信息，也可单独按偏好取名。
+              </p>
+            </div>
+            <span className="rounded-full bg-[#edeade]/5 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.24em] text-brand-primary">
+              Bazi Naming
+            </span>
+          </div>
           <NamingForm busy={busy} onSubmit={handleSubmit} initial={initial} />
         </section>
       )}
 
       {submitted && (
-        <div className="space-y-6">
+        <section className="mx-auto max-w-5xl rounded-2xl border border-[#edeade]/10 bg-[#2e261f]/75 p-4 shadow-[0_24px_80px_-56px_rgba(0,0,0,1)] backdrop-blur-sm sm:p-6">
+          <div className="mb-5 flex flex-col justify-between gap-3 border-b border-[#edeade]/10 pb-5 sm:flex-row sm:items-end">
+            <div>
+              <h2 className="font-serif text-2xl font-bold text-[#f7f4ee]">
+                取名结果
+              </h2>
+              <p className="mt-1 text-sm text-[#a3988f]">
+                八字信息与候选名建议会在下方同步输出。
+              </p>
+            </div>
+            <span className="rounded-full bg-[#edeade]/5 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.24em] text-brand-primary">
+              Streaming
+            </span>
+          </div>
+          <div className="space-y-6">
           {chart && <BaziChartView chart={chart} />}
           <StreamingText text={text} busy={busy} />
 
@@ -113,7 +132,7 @@ function NamingInner() {
                   setText("");
                   setError(null);
                 }}
-                className="rounded-xl border border-emerald-400/50 bg-emerald-400/10 px-6 py-3 font-serif tracking-widest text-emerald-300 transition hover:bg-emerald-400/20"
+                className="rounded-full border border-brand-primary/50 bg-brand-light px-6 py-3 font-serif tracking-widest text-brand-primary transition hover:border-brand-primary hover:bg-brand-primary/20"
               >
                 重新起名
               </button>
@@ -126,7 +145,7 @@ function NamingInner() {
                     /* ignore */
                   }
                 }}
-                className="rounded-xl border border-purple-500/50 bg-purple-500/10 px-6 py-3 font-serif tracking-widest text-neon-purple transition hover:bg-purple-500/20"
+                className="rounded-full border border-[#edeade]/15 bg-[#edeade]/5 px-6 py-3 font-serif tracking-widest text-[#edeade] transition hover:border-brand-primary/50 hover:text-brand-primary"
               >
                 复制结果
               </button>
@@ -134,11 +153,12 @@ function NamingInner() {
           )}
 
           {error && (
-            <p className="rounded-lg border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
+            <p className="rounded-lg border border-[#ef4444]/40 bg-[#ef4444]/10 px-4 py-3 text-sm text-[#fca5a5]">
               ⚠ {error}
             </p>
           )}
-        </div>
+          </div>
+        </section>
       )}
     </main>
   );
@@ -146,7 +166,7 @@ function NamingInner() {
 
 export default function NamingPage() {
   return (
-    <Suspense fallback={<main className="px-5 py-12 text-gray-400">加载中…</main>}>
+    <Suspense fallback={<main className="px-5 py-12 text-[#a3988f]">加载中…</main>}>
       <NamingInner />
     </Suspense>
   );
