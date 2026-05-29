@@ -56,17 +56,14 @@ export default function BaziPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-14">
-      <header className="mx-auto mb-8 max-w-3xl text-center">
-        <div className="mx-auto mb-4 grid size-16 place-items-center rounded-2xl border border-brand-primary/35 bg-brand-light font-serif text-3xl text-brand-primary">
-          ☷
-        </div>
-        <p className="font-mono text-xs uppercase tracking-[0.4em] text-brand-primary/80">
+      <header className="mx-auto mb-8 max-w-xl text-center">
+        <p className="font-mono text-xs uppercase tracking-[0.24em] text-brand-primary/80">
           Bazi · 四柱八字
         </p>
         <h1 className="mt-3 font-serif text-4xl font-black text-brand-primary sm:text-5xl">
           看八字
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#edeade] sm:text-base">
+        <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-[#edeade] sm:text-base">
           公历 / 农历皆可输入，本地精确排盘 + AI 命理流式解读。
         </p>
       </header>

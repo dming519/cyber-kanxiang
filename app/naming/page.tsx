@@ -69,17 +69,14 @@ function NamingInner() {
 
   return (
     <main className="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-14">
-      <header className="mx-auto mb-8 max-w-3xl text-center">
-        <div className="mx-auto mb-4 grid size-16 place-items-center rounded-2xl border border-brand-primary/35 bg-brand-light font-serif text-3xl text-brand-primary">
-          ☴
-        </div>
-        <p className="font-mono text-xs uppercase tracking-[0.4em] text-brand-primary/80">
+      <header className="mx-auto mb-8 max-w-xl text-center">
+        <p className="font-mono text-xs uppercase tracking-[0.24em] text-brand-primary/80">
           Naming · 起名补益
         </p>
         <h1 className="mt-3 font-serif text-4xl font-black text-brand-primary sm:text-5xl">
           起名
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#edeade] sm:text-base">
+        <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-[#edeade] sm:text-base">
           按八字喜用神补益取名，结合字义、音律、典故与避忌。
         </p>
       </header>
