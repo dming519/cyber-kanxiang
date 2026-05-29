@@ -53,13 +53,6 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link
-          href="/login"
-          className="hidden rounded-full bg-brand-primary px-4 py-2 text-sm font-semibold text-white shadow-[0_0_24px_rgba(204,144,92,0.18)] transition hover:bg-brand-hover md:inline-flex"
-        >
-          登录
-        </Link>
-
         <button
           type="button"
           aria-label={theme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
@@ -69,6 +62,13 @@ export function SiteHeader() {
         >
           {theme === "dark" ? "日" : "月"}
         </button>
+
+        <Link
+          href="/login"
+          className="hidden rounded-full bg-brand-primary px-4 py-2 text-sm font-semibold text-white shadow-[0_0_24px_rgba(204,144,92,0.18)] transition hover:bg-brand-hover md:inline-flex"
+        >
+          登录
+        </Link>
 
         <button
           type="button"
