@@ -72,29 +72,31 @@ export function SiteHeader() {
           </Link>
         </div>
 
-        <button
-          type="button"
-          aria-label={theme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
-          title={theme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
-          onClick={toggleTheme}
-          className="grid size-10 place-items-center rounded-full border border-[#edeade]/10 bg-[#edeade]/5 font-serif text-sm font-bold text-[#f7f4ee] transition hover:border-brand-primary/40 hover:bg-brand-light hover:text-brand-primary md:hidden"
-        >
-          {theme === "dark" ? "日" : "月"}
-        </button>
+        <div className="ml-auto flex items-center gap-2 md:hidden">
+          <button
+            type="button"
+            aria-label={theme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
+            title={theme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
+            onClick={toggleTheme}
+            className="grid size-10 place-items-center rounded-full border border-[#edeade]/10 bg-[#edeade]/5 font-serif text-sm font-bold text-[#f7f4ee] transition hover:border-brand-primary/40 hover:bg-brand-light hover:text-brand-primary"
+          >
+            {theme === "dark" ? "日" : "月"}
+          </button>
 
-        <button
-          type="button"
-          aria-label={menuOpen ? "关闭导航菜单" : "打开导航菜单"}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((open) => !open)}
-          className="grid size-10 place-items-center rounded-full border border-[#edeade]/10 bg-[#edeade]/5 text-[#f7f4ee] transition hover:border-brand-primary/40 hover:bg-brand-light hover:text-brand-primary md:hidden"
-        >
-          <span className="flex w-4 flex-col gap-1">
-            <span className="h-0.5 rounded-full bg-current" />
-            <span className="h-0.5 rounded-full bg-current" />
-            <span className="h-0.5 rounded-full bg-current" />
-          </span>
-        </button>
+          <button
+            type="button"
+            aria-label={menuOpen ? "关闭导航菜单" : "打开导航菜单"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+            className="grid size-10 place-items-center rounded-full border border-[#edeade]/10 bg-[#edeade]/5 text-[#f7f4ee] transition hover:border-brand-primary/40 hover:bg-brand-light hover:text-brand-primary"
+          >
+            <span className="flex w-4 flex-col gap-1">
+              <span className="h-0.5 rounded-full bg-current" />
+              <span className="h-0.5 rounded-full bg-current" />
+              <span className="h-0.5 rounded-full bg-current" />
+            </span>
+          </button>
+        </div>
       </div>
 
       {menuOpen ? (
