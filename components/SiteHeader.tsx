@@ -13,11 +13,11 @@ const NAV_ITEMS = [
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("kanxiang_theme") === "light" ? "light" : "dark";
+    const saved = localStorage.getItem("kanxiang_theme") === "dark" ? "dark" : "light";
     setTheme(saved);
     document.documentElement.setAttribute("data-theme", saved);
   }, []);
