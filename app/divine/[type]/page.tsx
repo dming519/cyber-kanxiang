@@ -107,7 +107,7 @@ function DivineInner({ type }: { type: "palm" | "face" | "mole" }) {
               </p>
             </div>
             <span className="rounded-full bg-[#edeade]/5 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.24em] text-brand-primary">
-              gpt-image-2
+              AI 生成
             </span>
           </div>
           <div className="space-y-6">
@@ -134,7 +134,7 @@ function DivineInner({ type }: { type: "palm" | "face" | "mole" }) {
             </p>
           )}
           <p className="text-center text-xs leading-relaxed text-[#a3988f]/70">
-            服务端调用 gpt-image-2，单次推演通常需 30-90 秒。
+            服务端生成结果，单次推演通常需 30-90 秒。
             <br />
             上传图片仅用于本次生成，不留存于服务器。
           </p>

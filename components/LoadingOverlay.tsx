@@ -34,7 +34,7 @@ export function LoadingOverlay({ open }: { open: boolean }) {
         <div>
           <p className="font-serif text-2xl text-[#f7f4ee]">{stage.text}</p>
           <p className="mt-2 font-mono text-xs uppercase tracking-[0.4em] text-brand-primary/60">
-            elapsed {seconds}s · gpt-image-2
+            elapsed {seconds}s · AI generating
           </p>
         </div>
         <div className="h-1 w-72 overflow-hidden rounded-full bg-[#edeade]/10">

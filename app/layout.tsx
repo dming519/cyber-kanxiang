@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 export const metadata: Metadata = {
   title: "赛博看相 · Cyber Kanxiang",
   description:
-    "AI × 玄学 — 上传一张图片，由 gpt-image-2 在原图基础上生成传统相术解析。看手相 · 看面相 · 看痣相。仅供文化娱乐参考。",
+    "AI × 玄学 — 上传一张图片，由 AI 在原图基础上生成传统相术解析。看手相 · 看面相 · 看痣相。仅供文化娱乐参考。",
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
