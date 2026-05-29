@@ -53,22 +53,24 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <button
-          type="button"
-          aria-label={theme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
-          title={theme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
-          onClick={toggleTheme}
-          className="hidden size-10 place-items-center rounded-full border border-[#edeade]/10 bg-[#edeade]/5 font-serif text-sm font-bold text-[#f7f4ee] transition hover:border-brand-primary/40 hover:bg-brand-light hover:text-brand-primary md:grid"
-        >
-          {theme === "dark" ? "日" : "月"}
-        </button>
+        <div className="hidden items-center gap-2 md:flex">
+          <button
+            type="button"
+            aria-label={theme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
+            title={theme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
+            onClick={toggleTheme}
+            className="grid size-10 place-items-center rounded-full border border-[#edeade]/10 bg-[#edeade]/5 font-serif text-sm font-bold text-[#f7f4ee] transition hover:border-brand-primary/40 hover:bg-brand-light hover:text-brand-primary"
+          >
+            {theme === "dark" ? "日" : "月"}
+          </button>
 
-        <Link
-          href="/login"
-          className="hidden rounded-full bg-brand-primary px-4 py-2 text-sm font-semibold text-white shadow-[0_0_24px_rgba(204,144,92,0.18)] transition hover:bg-brand-hover md:inline-flex"
-        >
-          登录
-        </Link>
+          <Link
+            href="/login"
+            className="rounded-full bg-brand-primary px-4 py-2 text-sm font-semibold text-white shadow-[0_0_24px_rgba(204,144,92,0.18)] transition hover:bg-brand-hover"
+          >
+            登录
+          </Link>
+        </div>
 
         <button
           type="button"
