@@ -13,9 +13,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-[#edeade]/10 bg-[#201913]/90 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-5 px-5 sm:px-6">
         <Link href="/" className="flex items-center gap-3">
-          <span className="grid size-9 place-items-center rounded-lg border border-brand-primary/35 bg-brand-light font-serif text-lg text-brand-primary">
-            相
-          </span>
+          <img src="/logo.svg" alt="" className="size-9" />
           <span className="font-serif text-lg font-bold tracking-wide text-[#f7f4ee]">
             赛博看相
           </span>
