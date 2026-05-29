@@ -45,7 +45,7 @@ export default function HomePage() {
       </header>
 
       <section className="mx-auto mt-8 max-w-6xl rounded-2xl border border-[#edeade]/10 bg-[#2e261f]/70 p-4 shadow-[0_24px_80px_-56px_rgba(0,0,0,1)] backdrop-blur-sm sm:p-6">
-        <div className="mb-5 flex flex-col justify-between gap-3 border-b border-[#edeade]/10 pb-5 sm:flex-row sm:items-end">
+        <div className="mb-5 border-b border-[#edeade]/10 pb-5">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.35em] text-brand-primary/75">
               AI Divination Tools
@@ -54,9 +54,6 @@ export default function HomePage() {
               选择一个工具开始
             </h2>
           </div>
-          <p className="max-w-md text-sm leading-relaxed text-[#a3988f]">
-            图像类生成结果图；八字与起名使用流式文本输出。
-          </p>
         </div>
         <div className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {ALL_TYPES.map((t) => (
