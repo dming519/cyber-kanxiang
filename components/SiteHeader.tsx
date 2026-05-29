@@ -74,6 +74,16 @@ export function SiteHeader() {
 
         <button
           type="button"
+          aria-label={theme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
+          title={theme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
+          onClick={toggleTheme}
+          className="grid size-10 place-items-center rounded-full border border-[#edeade]/10 bg-[#edeade]/5 font-serif text-sm font-bold text-[#f7f4ee] transition hover:border-brand-primary/40 hover:bg-brand-light hover:text-brand-primary md:hidden"
+        >
+          {theme === "dark" ? "日" : "月"}
+        </button>
+
+        <button
+          type="button"
           aria-label={menuOpen ? "关闭导航菜单" : "打开导航菜单"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((open) => !open)}
@@ -107,13 +117,6 @@ export function SiteHeader() {
             >
               登录
             </Link>
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="mt-2 rounded-full border border-[#edeade]/10 bg-[#edeade]/5 px-4 py-2.5 text-center text-sm font-semibold text-[#f7f4ee] transition hover:border-brand-primary/40 hover:bg-brand-light hover:text-brand-primary"
-            >
-              {theme === "dark" ? "切换浅色主题" : "切换深色主题"}
-            </button>
           </nav>
         </div>
       ) : null}
