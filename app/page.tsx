@@ -24,18 +24,15 @@ const EXTRA_FEATURES: HomeCardMeta[] = [
 
 export default function HomePage() {
   return (
-    <main className="mx-auto max-w-7xl px-5 py-12 sm:px-6 sm:py-16">
-      <header className="mx-auto max-w-3xl text-center">
-        <div className="mx-auto mb-6 grid size-20 place-items-center rounded-2xl border border-brand-primary/35 bg-brand-light font-serif text-4xl text-brand-primary shadow-[0_0_32px_rgba(204,144,92,0.16)]">
-          相
-        </div>
-        <h1 className="font-serif text-5xl font-black leading-tight text-brand-primary sm:text-6xl">
+    <main className="mx-auto max-w-7xl px-5 py-8 sm:px-6 sm:py-10">
+      <header className="mx-auto max-w-2xl text-center">
+        <h1 className="font-serif text-3xl font-black leading-tight text-brand-primary sm:text-4xl">
           赛博看相
         </h1>
-        <p className="mt-5 text-lg leading-relaxed text-[#edeade]">
+        <p className="mt-3 text-base leading-relaxed text-[#edeade]">
           上传图片或输入生辰，由 AI 生成传统相术与命理解析。
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
           {["图片推演", "本地排盘", "流式解读", "文化娱乐参考"].map((item) => (
             <span
               key={item}
@@ -47,7 +44,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <section className="mx-auto mt-12 max-w-6xl rounded-2xl border border-[#edeade]/10 bg-[#2e261f]/70 p-4 shadow-[0_24px_80px_-56px_rgba(0,0,0,1)] backdrop-blur-sm sm:p-6">
+      <section className="mx-auto mt-8 max-w-6xl rounded-2xl border border-[#edeade]/10 bg-[#2e261f]/70 p-4 shadow-[0_24px_80px_-56px_rgba(0,0,0,1)] backdrop-blur-sm sm:p-6">
         <div className="mb-5 flex flex-col justify-between gap-3 border-b border-[#edeade]/10 pb-5 sm:flex-row sm:items-end">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.35em] text-brand-primary/75">
