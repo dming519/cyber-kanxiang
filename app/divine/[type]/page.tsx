@@ -106,9 +106,6 @@ function DivineInner({ type }: { type: "palm" | "face" | "mole" }) {
                 图片会自动压缩，生成完成后直接展示结果图。
               </p>
             </div>
-            <span className="rounded-full bg-[#edeade]/5 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.24em] text-brand-primary">
-              AI 生成
-            </span>
           </div>
           <div className="space-y-6">
           <UploadZone
